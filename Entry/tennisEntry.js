@@ -54,5 +54,8 @@ form.addEventListener('submit', e => {
     submitButton.disabled = false;
     submitButton.value = "Submit";
   });
+  if (document.activeElement) {
+    document.activeElement.blur();
+}
 });
 
