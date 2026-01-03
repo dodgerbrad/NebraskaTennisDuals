@@ -1,7 +1,7 @@
 {
     "name": "2026 Duals Tournament",
     "short_name": "2026 Duals",
-    "start_url": "/FanPage/index.html",
+    "start_url": "index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#003366",
