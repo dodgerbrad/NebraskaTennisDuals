@@ -1,66 +1,179 @@
-/* Container to allow horizontal swipe on mobile */
-.table-container {
+/* --- 1. Global & iOS Reset --- */
+:root {
+    --ncaa-primary: #1a3a5a;
+    --ios-bg: #f2f2f7;
+    --card-bg: #ffffff;
+    --border: #d1d1d6;
+    --text: #1c1c1e;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--ios-bg);
+    color: var(--text);
+    margin: 0;
+    /* Respects iPhone Notch/Safe Areas */
+    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 15px) env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 15px);
+    line-height: 1.5;
+}
+
+h2 {
+    color: #1a3a5a; /* Deep NCAA Blue */
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 30px 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #C8102E; /* Sharp Accent Red */
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- 2. Layout Container --- */
+#box {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    background: white;
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 16px; /* Modern rounded look */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-sizing: border-box;
 }
 
-table {
-    min-width: 600px; /* Ensures the 8 columns don't squish too much */
-    
-    border-collapse: collapse;
+h2 {
+    color: var(--ncaa-primary);
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
 }
 
-th {
-    background-color: #1a3a5a;
-    color: white;
-    position: sticky;
-    top: 0; /* Keeps headers visible if the list gets long */
-    white-space: nowrap; /* Prevents headers from wrapping weirdly */
-}
-
-td, th {
-    padding: 10px 8px;
-    border-bottom: 1px solid #eee;
-    text-align: left;
-}
-
-/* Zebra striping for easier reading */
-tr:nth-child(even) { background-color: #f9f9f9; }
-
+/* --- 3. Filters (Touch Optimized) --- */
 .filters-container {
     display: flex;
+    flex-direction: column; /* Stacked on mobile */
     gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap; /* Stacks dropdowns on small phones */
+    margin-bottom: 25px;
+}
+
+@media (min-width: 600px) {
+    .filters-container {
+        flex-direction: row; /* Side-by-side on desktop */
+    }
 }
 
 .filter-group {
     flex: 1;
-    min-width: 150px;
 }
 
 .filter-group label {
-    font-size: 14px;
-    font-weight: bold;
-    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8e8e93;
     margin-bottom: 5px;
+    display: block;
+    text-transform: uppercase;
 }
 
 .filter-group select {
     width: 100%;
-    height: 44px; /* Best practice for mobile touch targets */
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    padding: 5px;
+    height: 48px; /* Minimum tap target height for iOS */
+    font-size: 16px !important; /* CRITICAL: Stops iPhone auto-zoom on click */
+    background-color: #f9f9fb;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    /* Custom Apple-style dropdown arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='www.w3.org' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
 }
 
-/* Add to tennisEntry.css */
+/* --- 4. The Table (Mobile Swipe Fix) --- */
+/* You MUST wrap your <table> in a <div class="table-container"> */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal swipe */
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling for iOS */
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-top: 10px;
+}
 
+table {
+    width: 100%;
+    min-width: 750px; /* Forces enough width for columns to not squash */
+    border-collapse: collapse;
+}
 
+th {
+    background-color: var(--ncaa-primary);
+    color: white;
+    padding: 14px 10px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    position: sticky;
+    top: 0; /* Keeps headers visible while scrolling down */
+    white-space: nowrap;
+}
 
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f2f2f7;
+    font-size: 14px;
+}
 
+/* Zebra Striping */
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Row Hover/Tap State */
+tbody tr:active {
+    background-color: #ebebeb;
+}
+
+/* --- 5. Match Details Container --- */
+#matchDetailsContainer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ios-bg);
+}
+
+.hidden {
+    display: none;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    color: var(--ncaa-primary);
+    margin-bottom: 15px;
+}
+
+/* --- 6. Visual Feedback (Loading/Status) --- */
+#tableBody td[colspan="8"] {
+    text-align: center;
+    padding: 40px;
+    color: #8e8e93;
+    font-style: italic;
+}
+
+/* Media Query for iPhone SE or very small screens */
+@media (max-width: 380px) {
+    #box {
+        padding: 15px;
+        border-radius: 0; /* Full bleed on tiny screens */
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+}
