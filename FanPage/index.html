@@ -4,12 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <!-- 1. CRITICAL: Prevents unwanted zooming on iPhones (iOS 26) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>2026 Match Results</title>
 
     <!-- 2. iOS Home Screen Icon & Web App Settings -->
     <!-- Ensure your icon is a 180x180 PNG with no transparency -->
     <link rel="apple-touch-icon" href="Nebraska Duals.png">
+    <!-- Modern standard (Fixes the console warning) -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+
+
+    <!-- Legacy Apple support (Keep for iOS splash screen compatibility in 2026) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Tennis Duals">
@@ -40,7 +47,7 @@
             </div>
         </div>
 
-        <h2 style="margin-top: 30px;">Dual Results</h2>
+        <h2 style="margin-top: 30px;">Tournament Results</h2>
         <p style="font-size: 12px; color: #8e8e93; text-align: center; margin-bottom: 5px;">
             ← Swipe Table to See More →
         </p>
@@ -71,7 +78,7 @@
         <!-- Match Details Section -->
         <div id="matchDetailsContainer" class="hidden">
             <h3 class="section-title">Match Log: <span id="selectedTeamName"></span></h3>
-            
+
             <div class="table-container">
                 <table>
                     <thead>
