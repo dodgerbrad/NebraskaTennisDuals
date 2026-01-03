@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Results</title>
+    <link rel="stylesheet" href="fanPage.css"> <!-- Re-use your styling -->
+
+</head>
+
+<body>
+    <div id="box" style="max-width: 900px;"> <!-- Wider box for more columns -->
+        <!-- Filters -->
+
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="filterClass">Filter by Class:</label>
+                <select id="filterClass">
+                    <option value="all">All Classes</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterTeam">Filter by Team:</label>
+                <select id="filterTeam">
+                    <option value="all">All Teams</option>
+                </select>
+            </div>
+        </div>
+
+        <h2>Tournament Results</h2>
+        <div class="filters-container">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Teams</th>
+                        <th>Class</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Winning%</th>
+                        <th>Level</th>
+                        <th>TotalPts</th>
+                        <th>PPts</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="8">Loading data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div id="matchDetailsContainer" class="hidden">
+        <h3 class="section-title">Match Log: <span id="selectedTeamName"></span></h3>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opponent</th>
+                        <th>Result</th>
+                        <th>Score</th>
+                        <th>Our Level</th>
+                        <th>Opp Level</th>
+                    </tr>
+                </thead>
+                <tbody id="detailsBody">
+                    <!-- Matches will load here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+
+    <script src="fanPage.js"></script>
+
+</body>
+
+</html>

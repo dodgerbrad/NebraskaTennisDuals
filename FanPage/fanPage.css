@@ -1,0 +1,66 @@
+/* Container to allow horizontal swipe on mobile */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    background: white;
+}
+
+table {
+    min-width: 600px; /* Ensures the 8 columns don't squish too much */
+    
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #1a3a5a;
+    color: white;
+    position: sticky;
+    top: 0; /* Keeps headers visible if the list gets long */
+    white-space: nowrap; /* Prevents headers from wrapping weirdly */
+}
+
+td, th {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+/* Zebra striping for easier reading */
+tr:nth-child(even) { background-color: #f9f9f9; }
+
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Stacks dropdowns on small phones */
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-group label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filter-group select {
+    width: 100%;
+    height: 44px; /* Best practice for mobile touch targets */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Add to tennisEntry.css */
+
+
+
+
