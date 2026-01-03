@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nebraska Duals Entry</title>
+   
+    <link href="tennisEntry.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div class="mid" id="box">
+        <h2>2025 Nebraska Girls Tennis Duals</h2>
+        <form id="myForm">
+
+            <div style="border: 2px solid black; padding: 10px">
+                <h3>Winning Team</h3>
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="teams1"
+                    name="teamA">
+                    <option value="none" selected>Pick Winning Team</option>
+                    
+
+                </select>
+
+                <label>Enter Score: </label><select class="form-select form-select-sm" aria-label="Small select example"
+                    id="ts1" name="teamApts">
+                    <option value="none" selected>Select Points Team 1</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="0">1=0</option>
+                    
+
+                </select>
+            </div>
+
+            <br>
+
+            <div style="border: 2px solid black; padding: 10px">
+                <h3>Losing Team</h3>
+
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="teams2"
+                    name="teamB">
+                    <option value="none" selected>Pick Losing Team</option>
+                    
+                </select>
+
+                <label>Enter Score: </label><select class="form-select form-select-sm" aria-label="Small select example"
+                    id="ts2" name="teamBpts">
+                    <option value="none" selected>Select Points Team 2</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="0">0</option>
+
+
+                </select>
+            </div>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+
+    
+    <script src="tennisEntry.js"></script>
+</body>
+
+</html>

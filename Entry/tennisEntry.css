@@ -1,0 +1,84 @@
+/* Base Reset & Mobile-First Styling */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+#box {
+    width: 100%;
+    max-width: 500px; /* Limits width on tablets/desktops */
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #1a3a5a;
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Form Container Styling */
+form div {
+    border: 1px solid #ddd !important; /* Replacing heavy black border */
+    border-radius: 8px;
+    background-color: #fafafa;
+    margin-bottom: 15px;
+}
+
+/* Larger Touch Targets for Mobile */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    height: 48px; /* Standard touch height */
+    font-size: 16px !important; /* Prevents iPhone from zooming in on focus */
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+}
+
+/* Submit Button styling */
+.btn-primary {
+    width: 100%;
+    height: 54px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    -webkit-appearance: none; /* Fixes iOS button styling issues */
+    appearance: none; 
+}
+
+.btn-primary:active {
+    background-color: #0056b3;
+    transform: scale(0.98);
+}
+
+/* Media Query for very small screens */
+@media (max-width: 360px) {
+    h2 { font-size: 1.25rem; }
+    #box { padding: 15px; }
+}
