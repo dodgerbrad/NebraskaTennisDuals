@@ -1,61 +1,107 @@
-const form = document.getElementById('myForm');
- // Replace with your copied URL
 const scriptURL = 'https://script.google.com/macros/s/AKfycbzu0zggjWSJ5AmBxLZRgdAn3Msc3BPl4FZzy3XrSjvmlvPDoshbsNhLIUs-7AVVpc3nxQ/exec';
 
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('myForm');
+  const logList = document.getElementById('logList');
+  const clearBtn = document.getElementById('clearSession');
+  const teamSelects = [document.getElementById('teams1'), document.getElementById('teams2')];
 
+  const displayLogs = () => {
+      const logs = JSON.parse(sessionStorage.getItem('dualLogs') || '[]');
+      if (logList) {
+          logList.innerHTML = logs.reverse().map(log => 
+              `<li style="background: #f8f9fa; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px;">
+                  <strong>${log.winTeam}</strong> def. <strong>${log.loseTeam}</strong> (${log.scoreA}-${log.scoreB})
+                  <br><small style="color: gray;">Submitted at: ${log.time}</small>
+              </li>`
+          ).join('');
+      }
+  };
 
-// Function to populate dropdowns on page load
-window.addEventListener('DOMContentLoaded', () => {
-    fetch(scriptURL)
-        .then(response => response.json())
-        .then(teams => {
-            const teamSelects = [document.getElementById('teams1'), document.getElementById('teams2')];
-            
-            teamSelects.forEach(select => {
-                // Clear existing options except the first "Pick Team" option
-                select.innerHTML = '<option value="none" selected disabled>Pick Team</option>';
-                
-                teams.forEach(teamName => {
-                    const option = document.createElement('option');
-                    option.value = teamName;
-                    option.textContent = teamName;
-                    select.appendChild(option);
+  fetch(scriptURL)
+      .then(response => response.json())
+      .then(teams => {
+          teamSelects.forEach(select => {
+              select.innerHTML = '<option value="none" selected disabled>Pick Team</option>';
+              teams.forEach(teamName => {
+                  const option = document.createElement('option');
+                  option.value = teamName;
+                  option.textContent = teamName;
+                  select.appendChild(option);
+              });
+          });
+      })
+      .catch(error => console.error('Error loading teams:', error));
+
+  // --- SINGLE CONSOLIDATED SUBMIT LISTENER ---
+  form.addEventListener('submit', (e) => {
+      e.preventDefault(); 
+
+      const winTeam = document.getElementById('teams1').value;
+      const winScoreRaw = document.getElementById('ts1').value;
+      const loseTeam = document.getElementById('teams2').value;
+      const loseScoreRaw = document.getElementById('ts2').value;
+
+      // 1. Check for Empty Fields (including the "none" strings)
+      if (winTeam === "none" || winScoreRaw === "none" || loseTeam === "none" || loseScoreRaw === "none" ||
+          winTeam === "" || winScoreRaw === "" || loseTeam === "" || loseScoreRaw === "") {
+          alert("⚠️ Please complete all selections.");
+          return; 
+      }
+
+      // 2. Check for Same Team
+      if (winTeam === loseTeam) {
+          alert("⚠️ Error: A team cannot play itself.");
+          return;
+      }
+
+      // 3. Check for Score Sum = 5
+      const scoreA = parseInt(winScoreRaw);
+      const scoreB = parseInt(loseScoreRaw);
+      if (scoreA + scoreB !== 5) {
+          alert(`⚠️ Invalid Score: Total points must be 5. Current total: ${scoreA + scoreB}`);
+          return; 
+      }
+
+            // --- IF ALL CHECKS PASS, PROCEED ---
+            const formData = new FormData(form);
+            const newLog = {
+                winTeam: winTeam,
+                scoreA: scoreA,
+                loseTeam: loseTeam,
+                scoreB: scoreB,
+                time: new Date().toLocaleTimeString()
+            };
+      
+            // 1. POST TO GOOGLE SHEETS
+            // We send the original form data to your Apps Script
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    console.log('Success!', response);
+                    alert("Submission successful!");
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert("Post to Sheet failed, but saved locally.");
                 });
-            });
-        })
-        .catch(error => console.error('Error loading teams:', error));
-});
-
-
-
-//Form Submit
-form.addEventListener('submit', e => {
-  e.preventDefault(); // Prevents the default form submission behavior
-
-  // UI Feedback: Disable button and show loading state
-  const submitButton = form.querySelector('input[type="submit"]');
-  submitButton.disabled = true;
-  submitButton.value = "Sending...";
-
-  fetch(scriptURL, { 
-    method: 'POST', 
-    body: new FormData(form) 
-  })
-  .then(response => {
-    alert('Success! Your entry has been recorded.');
-    form.reset(); // Clears the form after successful submission
-  })
-  .catch(error => {
-    console.error('Error!', error.message);
-    alert('Submission failed. Please check your connection.');
-  })
-  .finally(() => {
-    // Re-enable button regardless of success or failure
-    submitButton.disabled = false;
-    submitButton.value = "Submit";
+      
+            // 2. SAVE TO SESSION STORAGE (Local Receipt)
+            const currentLogs = JSON.parse(sessionStorage.getItem('dualLogs') || '[]');
+            currentLogs.push(newLog);
+            sessionStorage.setItem('dualLogs', JSON.stringify(currentLogs));
+      
+            displayLogs();
+            form.reset();
+      
   });
-  if (document.activeElement) {
-    document.activeElement.blur();
-}
+
+  if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+          sessionStorage.removeItem('dualLogs');
+          displayLogs();
+      });
+  }
+
+  displayLogs();
 });
 

@@ -1,20 +1,20 @@
-/* Base Reset & Mobile-First Styling */
+/* 1. Global Reset & 2026 Mobile Standards */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f4f7f6;
+    background-color: #f2f2f7; /* iOS standard background */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
     padding: 15px;
-    display: flex;
-    justify-content: center;
+    /* In 2026, we avoid display:flex on body for easier scrolling on small phones */
 }
 
-#box {
-    width: 100%;
-    max-width: 500px; /* Limits width on tablets/desktops */
-    background: white;
+.mid {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #ffffff;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
 }
 
 h2 {
@@ -22,6 +22,7 @@ h2 {
     color: #1a3a5a;
     font-size: 1.5rem;
     margin-top: 0;
+    margin-bottom: 20px;
 }
 
 h3 {
@@ -30,114 +31,94 @@ h3 {
     color: #333;
 }
 
-/* Form Container Styling */
-form div {
-    border: 1px solid #ddd !important; /* Replacing heavy black border */
-    border-radius: 8px;
+/* 2. Grouping Containers (The Winning/Losing Team Boxes) */
+#myForm > div {
+    border: 1px solid #e5e5ea !important; /* Soft iOS-style borders */
+    border-radius: 12px;
     background-color: #fafafa;
-    margin-bottom: 15px;
+    padding: 15px !important;
+    margin-bottom: 20px;
 }
 
-/* Larger Touch Targets for Mobile */
+/* 3. Inputs & Dropdowns - 2026 Anti-Zoom Fix */
 label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
+    font-size: 16px;
 }
 
-select {
+select, .form-select {
     width: 100%;
-    height: 48px; /* Standard touch height */
-    font-size: 16px !important; /* Prevents iPhone from zooming in on focus */
-    padding: 8px;
+    height: 48px; /* Standard 2026 finger-tap height */
+    font-size: 16px !important; /* CRITICAL: Prevents iOS auto-zoom */
+    padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    border: 1px solid #d1d1d6;
+    border-radius: 8px;
     background-color: white;
+    appearance: none; /* Modern look */
 }
 
-/* Submit Button styling */
+/* 4. The Submit Button */
 .btn-primary {
     width: 100%;
-    height: 54px;
-    background-color: #007bff;
+    height: 55px;
+    background-color: #007aff; /* Apple standard blue */
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s;
-    -webkit-appearance: none; /* Fixes iOS button styling issues */
-    appearance: none; 
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .btn-primary:active {
     background-color: #0056b3;
-    transform: scale(0.98);
+    transform: scale(0.98); /* Tactile feedback for touch */
 }
 
-/* Media Query for very small screens */
-@media (max-width: 360px) {
-    h2 { font-size: 1.25rem; }
-    #box { padding: 15px; }
+/* 5. Recent Submissions Log Styling (2026 Feed Style) */
+#logList {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
 }
 
-/* Ensure text is at least 16px to stop iOS Auto-Zoom */
-select, input, label {
-    font-size: 16px !important;
-}
-
-body {
-    background-color: #f2f2f7; /* Standard iOS light gray background */
-    font-family: -apple-system, sans-serif;
-    padding: 15px;
-}
-
-.mid {
-    max-width: 500px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 12px; /* Rounded card look */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* Make Dropdowns look like standard iOS buttons */
-.form-select {
-    display: block;
-    width: 100%;
+#logList li {
+    background: #ffffff;
+    border: 1px solid #e5e5ea;
     padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #d1d1d6;
-    border-radius: 8px;
-    appearance: none; /* Removes default arrow to customize if desired */
-    background-color: #ffffff;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border-left: 6px solid #34c759; /* Green success bar */
+    font-size: 0.95rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 
-/* Big Blue Submit Button for iPhone */
-.btn-primary {
-    width: 100%;
-    background-color: #007aff;
-    color: white;
+/* Clear Session Button */
+#clearSession {
+    background: none;
     border: none;
-    padding: 15px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 10px;
-    margin-top: 10px;
-    -webkit-appearance: none; /* Fixes gradient issues on older iOS */
-    appearance: none;
+    color: #ff3b30; /* iOS System Red */
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 10px 0;
 }
 
-.btn-primary:active {
-    background-color: #0051a8;
+footer a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
 }
 
-/* Style the grouping boxes */
-div[style*="border"] {
-    border: 1px solid #e5e5ea !important; /* Lighter, cleaner borders */
-    border-radius: 10px;
-    margin-bottom: 15px;
+footer a:active {
+    background-color: rgba(0, 122, 255, 0.1); /* Subtle highlight when tapped */
 }
 
