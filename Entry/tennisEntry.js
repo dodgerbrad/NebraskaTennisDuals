@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   };
 
-  fetch(scriptURL + "?type=teams"))
+  fetch(scriptURL + "?type=teams")
       .then(response => response.json())
       .then(teams => {
           teamSelects.forEach(select => {
