@@ -27,7 +27,18 @@ function renderTable(data) {
     const tableBody = document.getElementById('tableBody');
     tableBody.innerHTML = '';
 
-    data.forEach(row => {
+    // Sort: First by Class (A-Z), then by PPts (High-Low)
+    const sortedData = [...data].sort((a, b) => {
+        // 1. Sort by Class alphabetically
+        if (a.Class < b.Class) return -1;
+        if (a.Class > b.Class) return 1;
+
+        // 2. If Classes are equal, sort by PPts numerically (Descending)
+        // We use parseFloat to ensure "10" comes after "2"
+        return parseFloat(b.PPts || 0) - parseFloat(a.PPts || 0);
+    });
+
+    sortedData.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${row.Teams || ''}</td>
@@ -42,6 +53,7 @@ function renderTable(data) {
         tableBody.appendChild(tr);
     });
 }
+
 
 // 1. CLASS FILTER LISTENER (Updates Team Dropdown + Filters Table)
 const classSelect = document.getElementById('filterClass');
